@@ -1,4 +1,4 @@
-# muffin-hypervisor
+# hypervisor
 
 A RISC-V 64 hypervisor written in Rust. Work in progress.
 
