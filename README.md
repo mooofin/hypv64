@@ -1,13 +1,13 @@
-# hypervisor
+# riscv-hypervisor
 
-A RISC-V 64 hypervisor written in Rust. Work in progress.
+A RISC-V 64 hypervisor in Rust, built for QEMU `virt`.
 
-## Current status
-
-Boots on QEMU riscv64 virt, prints over SBI console, and has a basic trap handler in place.
+## What works
 
 ![status](status.png)
 
-## Roadmap
+It boots, sets up memory management, and launches a guest virtual machine. A tiny piece of guest code sits in its own address space running in virtualized mode, confirmed alive by QEMU. The hypervisor built the page tables, mapped the guest's memory, and handed control over.
 
-Virtual memory management, interrupt virtualization, guest VM scheduling, HVC interface, and multi-vCPU support.
+## What doesn't
+
+The hypervisor cannot handle traps from the guest yet. No devices are emulated, no interrupts are forwarded, and there is only one CPU. The guest runs in a loop and the hypervisor just watches. Next steps are trap handling, device models, and basic VM management.

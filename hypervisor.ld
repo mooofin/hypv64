@@ -27,13 +27,11 @@ SECTIONS {
     . += 1024 * 1024; /* 1MB */
     __stack_top = .;
 
+    __heap = .;
+    . += 100 * 1024 * 1024; /* 100MB */
+    __heap_end = .;
+
     /DISCARD/ : {
         *(.eh_frame);
-    }
-text :{
-        KEEP(*(.text.boot));
-        *(.text .text.*);
-        . = ALIGN(8);
-        *(.text.stvec);
     }
 }
