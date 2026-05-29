@@ -1,19 +1,10 @@
 #!/bin/sh
 set -ev
 
-# build the guest infinite-loop kernel
-clang \
-    -Wall -Wextra --target=riscv64-unknown-elf -ffreestanding -nostdlib \
-    -fuse-ld=lld \
-    -Wl,-eguest_boot -Wl,-Ttext=0x100000 -Wl,-Map=guest.map \
-    guest.S -o guest.elf
-
-llvm-objcopy -O binary guest.elf guest.bin
-
 RUSTFLAGS="-C link-arg=-Thypervisor.ld -C linker=rust-lld" \
-  cargo build --bin riscv-hypervisor --target riscv64gc-unknown-none-elf
+  cargo build --release --bin riscv-hypervisor --target riscv64gc-unknown-none-elf
 
-cp target/riscv64gc-unknown-none-elf/debug/riscv-hypervisor riscv-hypervisor.elf
+cp target/riscv64gc-unknown-none-elf/release/riscv-hypervisor riscv-hypervisor.elf
 
 qemu-system-riscv64 \
     -machine virt \

@@ -76,5 +76,5 @@ pub static GLOBAL_ALLOCATOR: BumpAllocator = BumpAllocator::new();
 pub fn alloc_pages(len: usize) -> *mut u8 {
     debug_assert!(len % 4096 == 0, "len must be a multiple of 4096");
     let layout = Layout::from_size_align(len, 4096).unwrap();
-    unsafe { GLOBAL_ALLOCATOR.alloc_zeroed(layout) as *mut u8 }
+    unsafe { GLOBAL_ALLOCATOR.alloc(layout) as *mut u8 }
 }

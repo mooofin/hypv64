@@ -6,7 +6,8 @@ A RISC-V 64 hypervisor in Rust, built for QEMU `virt`.
 
 ![status](status.png)
 
-It boots, sets up memory management, and launches a guest virtual machine. A tiny piece of guest code sits in its own address space running in virtualized mode :(
+It boots, sets up memory management, loads a Linux kernel image with a generated device tree blob (DTB), and launches it in VS-mode (virtualized supervisor mode) with 2-stage address translation (hgatp).
+
 ## What doesn't
 
-The hypervisor cannot handle traps from the guest yet. No devices are emulated, no interrupts are forwarded, and there is only one CPU. The guest runs in a loop and the hypervisor just watches. Next steps are trap handling, device models, and basic VM management.
+No devices are emulated and no interrupts are forwarded. The guest traps to the hypervisor but only panics -- no I/O emulation or device models exist yet. Only one CPU. Next steps are device models, interrupt injection, and SMP support.
